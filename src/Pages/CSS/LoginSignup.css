@@ -5,6 +5,8 @@
     padding-top: 100px;
     padding-bottom: 10px;
 }
+
+
 .loginsignup-container{
     width: 580px;
     height: 600px;
@@ -47,6 +49,7 @@
     color: #5c5c5c;
     font-size: 18px;
     font-weight: 500;
+    cursor: pointer;
 }
 .loginsignup-login span{
     color: #ff4141;

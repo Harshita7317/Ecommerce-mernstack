@@ -1,5 +1,8 @@
 import React, { useContext, useState, useRef } from "react";
+
 import "./Navbar.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Link } from "react-router-dom";
 import logo from "../Assets/logo.png";
@@ -76,6 +79,7 @@ const Navbar = () => {
             onClick={() => {
               localStorage.removeItem("auth-token");
               window.location.replace("/");
+              toast.success("Logged out");
             }}
           >
             Logout

@@ -2,10 +2,18 @@ import React, { useContext } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/cart_cross_icon.png";
+import { useNavigate } from "react-router-dom";
 
 const CartItems = () => {
   const { getTotalCartAmount, all_product, cartItems, removeFromCart } =
     useContext(ShopContext);
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/another");
+  };
+
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
@@ -18,22 +26,22 @@ const CartItems = () => {
       </div>
       <hr />
       {all_product.map((e) => {
-        if (cartItems[e.id] > 0) {
+        if (cartItems[e._id] > 0) {
           return (
-            <div>
+            <div key={e._id}>
               <div className="cartitems-format cartitems-format-main">
                 <img src={e.image} alt="" className="carticon-product-icon" />
                 <p>{e.name}</p>
                 <p>${e.new_price}</p>
                 <button className="cartitems-quantity">
-                  {cartItems[e.id]}
+                  {cartItems[e._id]}
                 </button>
-                <p>${e.new_price * cartItems[e.id]}</p>
+                <p>${e.new_price * cartItems[e._id]}</p>
                 <img
                   className="cartitems-remove-icon"
                   src={remove_icon}
                   onClick={() => {
-                    removeFromCart(e.id);
+                    removeFromCart(e._id);
                   }}
                   alt=""
                 />
@@ -63,7 +71,7 @@ const CartItems = () => {
               <h3>${getTotalCartAmount()}</h3>
             </div>
           </div>
-          <button>PROCEED TO CHECKOUT</button>
+          <button onClick={handleButtonClick}>PROCEED TO CHECKOUT</button>
         </div>
         <div className="cartitems-promocode">
           <p>If you have a promo code, Enter it here</p>

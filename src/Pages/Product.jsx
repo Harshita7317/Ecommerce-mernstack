@@ -10,7 +10,14 @@ import RelatedProducts from "../Components/RelatedProducts/RelatedProducts";
 const Product = () => {
   const { all_product } = useContext(ShopContext);
   const { productId } = useParams();
-  const product = all_product.find((e) => e.id === Number(productId));
+  // Convert productId to a number
+  // const parsedProductId = parseInt(productId);
+  const product = all_product.find((e) => e.id === productId);
+  console.log(productId);
+  // console.log(e.id);
+  if (!product) {
+    return <div>Product not found</div>;
+  }
   return (
     <div>
       <Breadcrumbs product={product} />

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
-    usernmae: "",
+    username: "",
     password: "",
     email: "",
   });
@@ -27,6 +29,7 @@ const LoginSignup = () => {
       .then((response) => response.json())
       .then((data) => (responseData = data));
     if (responseData.success) {
+      toast.success("Logged in successfully");
       localStorage.setItem("auth-token", responseData.token);
       window.location.replace("/");
     } else {
@@ -48,6 +51,7 @@ const LoginSignup = () => {
       .then((response) => response.json())
       .then((data) => (responseData = data));
     if (responseData.success) {
+      toast.success("Signed up success");
       localStorage.setItem("auth-token", responseData.token);
       window.location.replace("/");
     } else {
@@ -98,7 +102,7 @@ const LoginSignup = () => {
           </p>
         ) : (
           <p className="loginsignup-login">
-            Create an account?{" "}
+            New User? Create an account.{" "}
             <span onClick={() => setState("Sign Up")}>Click here</span>
           </p>
         )}
