@@ -5,7 +5,7 @@ import remove_icon from "../Assets/cart_cross_icon.png";
 import { useNavigate } from "react-router-dom";
 
 const CartItems = () => {
-  const { getTotalCartAmount, all_product, cartItems, removeFromCart } =
+  const { getTotalCartAmount, allProduct, cartItems, removeFromCart } =
     useContext(ShopContext);
 
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {all_product.map((e) => {
+      {allProduct.map((e) => {
         if (cartItems[e._id] > 0) {
           return (
             <div key={e._id}>

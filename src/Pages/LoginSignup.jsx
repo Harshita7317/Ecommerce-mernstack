@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
@@ -16,46 +17,58 @@ const LoginSignup = () => {
   };
 
   const login = async () => {
-    console.log("Login function executed".formData);
-    let responseData;
-    await fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => (responseData = data));
-    if (responseData.success) {
-      toast.success("Logged in successfully");
-      localStorage.setItem("auth-token", responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+    try {
+      if (formData.email.trim() === "")
+        return toast.warning("Please enter your email");
+      if (formData.password.trim() === "")
+        return toast.warning("Please enter your password");
+      const response = await axios.post("/login", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = response.data;
+      if (responseData.success) {
+        toast.success("Logged in successfully");
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      } else {
+        toast.error(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error(
+        "An error occurred while logging in. Please try again later."
+      );
     }
   };
 
   const signup = async () => {
-    console.log("signed up", formData);
-    let responseData;
-    await fetch("http://localhost:4000/signup", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => (responseData = data));
-    if (responseData.success) {
-      toast.success("Signed up success");
-      localStorage.setItem("auth-token", responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+    try {
+      if (formData.username.trim() === "")
+        return toast.warning("Please enter your name");
+      if (formData.email.trim() === "")
+        return toast.warning("Please enter your email");
+      if (formData.password.trim() === "")
+        return toast.warning("Please enter your password");
+      const response = await axios.post("/signup", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = response.data;
+      if (responseData.success) {
+        toast.success("Signed up successfully");
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      } else {
+        toast.error(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      toast.error(
+        "An error occurred while signing up. Please try again later."
+      );
     }
   };
 
@@ -70,7 +83,7 @@ const LoginSignup = () => {
               value={formData.username}
               onChange={changeHandler}
               type="text"
-              placeholder="your name"
+              placeholder="Your name"
             />
           )}
           <input
@@ -85,7 +98,7 @@ const LoginSignup = () => {
             value={formData.password}
             onChange={changeHandler}
             type="password"
-            placeholder="password"
+            placeholder="Password"
           />
         </div>
         <button

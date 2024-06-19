@@ -8,11 +8,11 @@ import RelatedProducts from "../Components/RelatedProducts/RelatedProducts";
 //import RelatedProducts from "../Components/ProductDisplay/ProductDisplay";
 
 const Product = () => {
-  const { all_product } = useContext(ShopContext);
+  const { allProduct } = useContext(ShopContext);
   const { productId } = useParams();
   // Convert productId to a number
   // const parsedProductId = parseInt(productId);
-  const product = all_product.find((e) => e.id === productId);
+  const product = allProduct.find((e) => e.id === productId);
   console.log(productId);
   // console.log(e.id);
   if (!product) {

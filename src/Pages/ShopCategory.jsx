@@ -5,10 +5,10 @@ import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Items/Item";
 
 const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext);
+  const { allProduct } = useContext(ShopContext); // Ensure it matches the key in context
 
   // Filter products based on the category
-  const filteredProducts = all_product.filter(
+  const filteredProducts = allProduct.filter(
     (item) => props.category === item.category
   );
 
